@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/e3c87346b8.js" crossorigin="anonymous"></script>
+    <title>Mening rejalarim</title>
+</head>
+<body>
+    <div class="container text-center w-50">
+        <h1>Mening rejalarim</h1>
+        <div class="form w-50" style="margin-left: 165px;margin-top: 20px;">
+            <form method="post">
+                {{form}}
+                {% csrf_token %}
+                <p><input class="btn btn-success w-50 mt-2" type="submit" value="Saqlash"></p>
+            </form>
+        </div>
+        <div class="ishlar mt-5" >
+            {% for ish in ishlar %}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <span style="font-size: 20px; font-weight: 700; float: left;">{{ ish.nomi }}</span>
+                        <span style="float: right; font-style: italic; color: grey;">{{ ish.sana }} | {{ ish.vaqti }}</span>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'delete' ish.id %}">
+                            <button class="btn btn-danger" style="font-size: small; float: right;">Delete</button>
+                        </a>
+                        
+                        {% if not ish.bajarish %}
+                            <a href="{% url 'edit' ish.id %}">
+                                <button class="btn btn-warning" style="font-size: small; float: right;margin-right: 8px;">Taxrirlash</button>
+                            </a>
+                            <a href="{% url 'bajarildi' ish.id %}">
+                                <button class="btn btn-primary" style="font-size: small; float: right; margin-right: 8px;">Bajarildi</button>
+                            </a>
+                        {% else %}
+                            <i class="fas fa-check" style="color: green; font-size: 30px; float: right;margin-right: 10px;"></i>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
